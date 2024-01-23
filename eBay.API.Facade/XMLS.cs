@@ -30,7 +30,7 @@ namespace eBay.API.Facade
             namespaces.Add("null", namespaceUri);
 
             using MemoryStream memoryStream = new MemoryStream();
-            using (StreamWriter writer = new StreamWriter(memoryStream, Encoding.UTF8, 1024, true))
+            using (StreamWriter writer = new StreamWriter(memoryStream, new UTF8Encoding(encoderShouldEmitUTF8Identifier: false), 1024, leaveOpen: false))
             {
                 serializer.Serialize(writer, requestObject, namespaces);
             }
@@ -57,7 +57,7 @@ namespace eBay.API.Facade
 
         public async Task<string> SendEbayRequest(string requestType, string xmlContent)
         {
-            return await restClient.SendHttpRequest(requestType, xmlContent, HttpMethod.Post);
+            return await restClient.SendHttpRequest(requestType, xmlContent);
         }
     }
 }
