@@ -91,4 +91,4 @@ Item item = new Item()
     }
 };
 
-await nosepass.AddFixedPriceItem(item);
+await is.AddFixedPriceItem(item);
