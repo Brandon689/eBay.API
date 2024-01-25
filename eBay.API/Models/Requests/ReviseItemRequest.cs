@@ -2,14 +2,8 @@
 
 namespace eBay.API.Models.Requests
 {
-    public class ReviseItemRequest
+    public class ReviseItemRequest : ReviseBase
     {
-        public RequesterCredentials RequesterCredentials { get; set; }
-
-        public string ErrorLanguage { get; set; }
-
-        public string WarningLevel { get; set; } = "High";
-
         public Item Item { get; set; }
     }
 }

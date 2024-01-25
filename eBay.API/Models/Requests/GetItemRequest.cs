@@ -1,7 +1,4 @@
-﻿using eBay.API.Models.SellerStore;
-using System.Xml.Serialization;
-
-namespace eBay.API.Models.Requests
+﻿namespace eBay.API.Models.Requests
 {
     public class GetItemRequest : GetBase
     {

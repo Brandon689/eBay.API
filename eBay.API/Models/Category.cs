@@ -5,25 +5,25 @@ namespace eBay.API.Models.Response
     [XmlRoot(ElementName = "Category")]
     public class Category
     {
-        [XmlElement(ElementName = "BestOfferEnabled")]
+        [XmlElement("BestOfferEnabled")]
         public bool BestOfferEnabled { get; set; }
 
-        [XmlElement(ElementName = "AutoPayEnabled")]
+        [XmlElement("AutoPayEnabled")]
         public bool AutoPayEnabled { get; set; }
 
-        [XmlElement(ElementName = "CategoryID")]
+        [XmlElement("CategoryID")]
         public int CategoryID { get; set; }
 
-        [XmlElement(ElementName = "CategoryLevel")]
+        [XmlElement("CategoryLevel")]
         public int CategoryLevel { get; set; }
 
-        [XmlElement(ElementName = "CategoryName")]
+        [XmlElement("CategoryName")]
         public string CategoryName { get; set; }
 
-        [XmlElement(ElementName = "CategoryParentID")]
+        [XmlElement("CategoryParentID")]
         public int CategoryParentID { get; set; }
 
-        [XmlElement(ElementName = "LeafCategory")]
+        [XmlElement("LeafCategory")]
         public bool LeafCategory { get; set; }
     }
 }

@@ -198,6 +198,16 @@ namespace eBay.API.Facade
                 {
                     EntriesPerPage = entriesPerPage,
                     PageNumber = pageNumber
+                },
+                OutputSelectors = new List<OutputSelector>()
+                {
+                    //new OutputSelector("Title"),
+                    new OutputSelector("ItemID"),
+                    //new OutputSelector("QuantityAvailable"),
+                    new OutputSelector("Quantity"),
+                    new OutputSelector("SKU"),
+                    //new OutputSelector("StartPrice"),
+                    new OutputSelector("BuyItNowPrice"),
                 }
             };
             string response = await xs.SendEbayRequest("GetSellerList",

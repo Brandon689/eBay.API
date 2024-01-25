@@ -7,46 +7,46 @@ namespace eBay.API.Models.Response
     [XmlRoot(ElementName = "VerifyAddFixedPriceItemResponse", Namespace = "urn:ebay:apis:eBLBaseComponents")]
     public class VerifyAddFixedPriceItemResponse
     {
-        [XmlElement(ElementName = "Category2ID")]
+        [XmlElement("Category2ID")]
         public string Category2ID { get; set; }
 
-        [XmlElement(ElementName = "CategoryID")]
+        [XmlElement("CategoryID")]
         public string CategoryID { get; set; }
 
-        [XmlElement(ElementName = "DiscountReason")]
+        [XmlElement("DiscountReason")]
         public string DiscountReason { get; set; }
 
-        [XmlElement(ElementName = "Fees")]
+        [XmlElement("Fees")]
         public Fees Fees { get; set; }
 
-        [XmlElement(ElementName = "ItemID")]
+        [XmlElement("ItemID")]
         public string ItemID { get; set; }
 
-        [XmlElement(ElementName = "SKU")]
+        [XmlElement("SKU")]
         public string SKU { get; set; }
 
-        [XmlElement(ElementName = "Ack")]
+        [XmlElement("Ack")]
         public string Ack { get; set; }
 
-        [XmlElement(ElementName = "Build")]
+        [XmlElement("Build")]
         public string Build { get; set; }
 
-        [XmlElement(ElementName = "CorrelationID")]
+        [XmlElement("CorrelationID")]
         public string CorrelationID { get; set; }
 
-        [XmlElement(ElementName = "Errors")]
+        [XmlElement("Errors")]
         public Errors Errors { get; set; }
 
-        [XmlElement(ElementName = "HardExpirationWarning")]
+        [XmlElement("HardExpirationWarning")]
         public string HardExpirationWarning { get; set; }
 
-        [XmlElement(ElementName = "Message")]
+        [XmlElement("Message")]
         public string Message { get; set; }
 
-        [XmlElement(ElementName = "Timestamp")]
+        [XmlElement("Timestamp")]
         public string Timestamp { get; set; }
 
-        [XmlElement(ElementName = "Version")]
+        [XmlElement("Version")]
         public string Version { get; set; }
     }
 }

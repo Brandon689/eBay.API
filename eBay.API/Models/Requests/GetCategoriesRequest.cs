@@ -1,21 +1,20 @@
-﻿using eBay.API.Models.SellerStore;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
 namespace eBay.API.Models.Requests
 {
     [XmlRoot(ElementName = "GetCategoriesRequest")]
     public class GetCategoriesRequest : GetBase
     {
-        [XmlElement(ElementName = "CategoryParent")]
+        [XmlElement("CategoryParent")]
         public string CategoryParent { get; set; }
 
-        [XmlElement(ElementName = "CategorySiteID")]
+        [XmlElement("CategorySiteID")]
         public string CategorySiteID { get; set; }
 
-        [XmlElement(ElementName = "LevelLimit")]
+        [XmlElement("LevelLimit")]
         public string LevelLimit { get; set; }
 
-        [XmlElement(ElementName = "ViewAllNodes")]
+        [XmlElement("ViewAllNodes")]
         public bool ViewAllNodes { get; set; }
     }
 }
