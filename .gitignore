@@ -365,3 +365,6 @@ FodyWeavers.xsd
 /eBay.API.Test/Program.cs
 /eBay.API.Test/orders.xml
 /eBay.API.Test/vo.xml
+/eBay.API.Test/getCategoriesRE.xml
+/eBay.API.Test/getCategoriesREQ.xml
+/eBay.API.Test/GetItemResponse.xml
