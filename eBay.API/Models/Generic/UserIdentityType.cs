@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace eBay.API.Models
+namespace eBay.API.Models.Generic
 {
     [XmlRoot("UserIdentityType")]
     public class UserIdentityType

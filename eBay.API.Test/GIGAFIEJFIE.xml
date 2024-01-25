@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GetItemRequest xmlns="urn:ebay:apis:eBLBaseComponents">
+  <RequesterCredentials>
+    <eBayAuthToken>v^1.1#i^1#f^0#r^1#p^3#I^3#t^Ul4xMF8zOjM0ODZCOTM4NkZDRjE2QjBGOEIxOTJFM0I1QjM3RUUyXzBfMSNFXjI2MA==</eBayAuthToken>
+  </RequesterCredentials>
+  <DetailLevel>ReturnAll</DetailLevel>
+  <ItemID>235324060112</ItemID>
+  <OutputSelector>Title</OutputSelector>
+  <OutputSelector>ItemID</OutputSelector>
+  <OutputSelector>QuantityAvailable</OutputSelector>
+  <OutputSelector>StartPrice</OutputSelector>
+</GetItemRequest>

@@ -43,10 +43,10 @@ namespace eBay.API.Facade
                 // XML part
                 await writer.WriteAsync("Content-Disposition: form-data; name=\"document\"\r\nContent-Type: text/xml; charset=UTF-8\r\n\r\n" + xmlPayload + "\r\n").ConfigureAwait(false);
                 //await writer.WriteAsync("").ConfigureAwait(false);
-                
+
                 //writer.Write("<?xml version=\"1.0\" encoding=\"utf-8\"?><UploadSiteHostedPicturesRequest xmlns=\"urn:ebay:apis:eBLBaseComponents\"><RequesterCredentials><eBayAuthToken xmlns=\"urn:ebay:apis:eBLBaseComponents\">v^1.1#i^1#r^1#f^0#I^3#p^3#t^Ul4xMF8yOkQ1OTZCM0UxMEIxRDY2NjAwRUFGMTZFRTE2RTFCM0Y5XzBfMSNFXjI2MA==</eBayAuthToken></RequesterCredentials><PictureName>Gall-Peters projection map</PictureName><PictureSet>Standard</PictureSet><ExtensionInDays>20</ExtensionInDays></UploadSiteHostedPicturesRequest>\r\n");
                 //writer.Write(xmlPayload + "\r\n");
-                
+
                 await writer.FlushAsync().ConfigureAwait(false);
 
                 // Image part

@@ -1,13 +1,10 @@
 ﻿using eBay.API.Models.SellerStore;
+using System.Xml.Serialization;
 
 namespace eBay.API.Models.Requests
 {
-    public class GetItemRequest
+    public class GetItemRequest : GetBase
     {
-        public RequesterCredentials RequesterCredentials { get; set; }
-
-        public string DetailLevel { get; set; } = "ReturnAll";
-
         public string ItemID { get; set; }
     }
 }

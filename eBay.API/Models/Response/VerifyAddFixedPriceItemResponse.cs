@@ -2,7 +2,7 @@
 using eBay.API.Models.Response.Error;
 using System.Xml.Serialization;
 
-namespace eBay.API.Models.Requests
+namespace eBay.API.Models.Response
 {
     [XmlRoot(ElementName = "VerifyAddFixedPriceItemResponse", Namespace = "urn:ebay:apis:eBLBaseComponents")]
     public class VerifyAddFixedPriceItemResponse
