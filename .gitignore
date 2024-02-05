@@ -370,3 +370,5 @@ FodyWeavers.xsd
 /eBay.API.Test/GetItemResponse.xml
 /eBay.API.Test/Getmyselling.xml
 /eBay.API.Test/Getmysellingre.xml
+/eBay.API.Test/account.xml
+/eBay.API.Test/catfeature.xml
