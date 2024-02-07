@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using eBay.API.Models.Response.A;
+using System.Xml.Serialization;
 
 namespace eBay.API.Models.Response
 {

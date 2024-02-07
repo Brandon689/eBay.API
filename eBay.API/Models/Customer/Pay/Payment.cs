@@ -1,5 +1,5 @@
-﻿using System.Xml.Serialization;
-using eBay.API.Models.Generic;
+﻿using eBay.API.Models.Generic;
+using System.Xml.Serialization;
 
 namespace eBay.API.Models.Customer.Pay
 {

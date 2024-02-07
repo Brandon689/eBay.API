@@ -1,11 +1,15 @@
 ﻿using eBay.API.Enums;
 using eBay.API.Models;
+using eBay.API.Models.Items;
 using eBay.API.Models.Requests;
+using eBay.API.Models.Requests.Listing;
+using eBay.API.Models.Requests.Metadata;
+using eBay.API.Models.Requests.Order;
+using eBay.API.Models.Requests.UserAccount;
 using eBay.API.Models.Response;
+using eBay.API.Models.Response.Metadata;
 using eBay.API.Models.SellerStore;
 using System.Collections.Concurrent;
-using System.Net;
-using System.Text;
 using System.Xml.Serialization;
 
 namespace eBay.API.Facade
@@ -20,70 +24,94 @@ namespace eBay.API.Facade
             xs = t;
         }
 
-        public UploadSiteHostedPicturesResponse UploadFile(string localFile, string authNauthToken)
+        public async ValueTask<GetAccountResponse> CompleteSale()
         {
-            string boundary = "----MIMEBoundary" + DateTime.Now.Ticks.ToString("x");
-
-            string CRLF = "\r\n";
-            HttpWebRequest? request = WebRequest.Create("https://api.ebay.com/ws/api.dll") as HttpWebRequest;
-            request.Headers.Add("X-EBAY-API-COMPATIBILITY-LEVEL", "515");
-            request.Headers.Add("X-EBAY-API-SITEID", "15");
-            request.Headers.Add("X-EBAY-API-DETAIL-LEVEL", "0");
-            request.Headers.Add("X-EBAY-API-CALL-NAME", "UploadSiteHostedPictures");
-            request.ContentType = "multipart/form-data; boundary=" + boundary;
-            request.Method = "POST";
-
-            string payload1 = boundary + CRLF +
-                "Content-Disposition: form-data; name=document" + CRLF +
-                "Content-Type: text/xml; charset=\"UTF-8\"" + CRLF + CRLF +
-                "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
-                "<UploadSiteHostedPicturesRequest xmlns=\"urn:ebay:apis:eBLBaseComponents\">" +
-                "<PictureSet>Supersize</PictureSet>" +
-                "<RequesterCredentials><eBayAuthToken>" + authNauthToken + "</eBayAuthToken></RequesterCredentials>" +
-                "</UploadSiteHostedPicturesRequest>" +
-                CRLF + "--" + boundary + CRLF +
-                "Content-Disposition: form-data; name=image; filename=image" + CRLF +
-                "Content-Type: application/octet-stream" + CRLF +
-                "Content-Transfer-Encoding: binary" + CRLF + CRLF;
-
-            string payload3 = CRLF + "--" + boundary + CRLF;
-
-            byte[] postDataBytes1 = Encoding.ASCII.GetBytes(payload1);
-            byte[] postDataBytes2 = Encoding.ASCII.GetBytes(payload3);
-            byte[] image = File.ReadAllBytes(localFile);
-            int length = postDataBytes1.Length + image.Length + postDataBytes2.Length;
-
-            using (Stream stream = request.GetRequestStream())
-            {
-                byte[] bytes = postDataBytes1.Concat(image).Concat(postDataBytes2).ToArray();
-                var str = Encoding.Default.GetString(bytes);
-                stream.Write(bytes, 0, length);
-            }
-
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            string output = string.Empty;
-            using (StreamReader sr = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
-            {
-                output = sr.ReadToEnd();
-            }
-            return xs.DeserializeXmlToObject<UploadSiteHostedPicturesResponse>(output);
-        }
-
-        public async Task<UploadSiteHostedPicturesResponse> UploadFileWithExternalUrl()
-        {
-            UploadSiteHostedPicturesRequest request = new UploadSiteHostedPicturesRequest()
+            CompleteSaleRequest request = new CompleteSaleRequest()
             {
                 RequesterCredentials = xs.GetRequesterCredentials(),
-                ErrorLanguage = "en-US",
-                WarningLevel = "High",
-                ExternalPictureURL = "https://fastcdn.hoyoverse.com/mi18n/hk4e_global/m20231213hy3784dbsw/upload/839ee8c17dadff82dd16affa01d76e77_4356147439317626683.jpg",
-                PictureName = "Developer Page Banner"
+                FeedbackInfo = new FeedbackInfo()
+                {
+                    CommentText = "good buyer",
+                    CommentType = "Positive",
+                    TargetUser = "user123"
+                },
+                Shipped = true
             };
-            string response = await xs.SendEbayRequest("UploadSiteHostedPictures", xs.SerializeToXml(request));
-            return xs.DeserializeXmlToObject<UploadSiteHostedPicturesResponse>(response);
+            string response = await xs.SendEbayRequest("CompleteSale",
+                xs.SerializeToXml(request));
+            //File.WriteAllText("../../../account.xml", response);
+            return xs.DeserializeXmlToObject<GetAccountResponse>(response);
         }
 
-        public async ValueTask<string> GetSellerTransactions()
+        public async ValueTask<GetAccountResponse> GetAccount(DateTime beginTime, DateTime endTime)
+        {
+            GetAccountRequest request = new GetAccountRequest()
+            {
+                RequesterCredentials = xs.GetRequesterCredentials(),
+                ExcludeBalance = false,
+                ExcludeSummary = false,
+                IncludeConversionRate = true,
+                IncludeNettedEntries = true,
+                BeginDate = DateTimeStr.Format(beginTime),
+                EndDate = DateTimeStr.Format(endTime),
+            };
+            string response = await xs.SendEbayRequest("GetAccount",
+                xs.SerializeToXml(request));
+            //File.WriteAllText("../../../account.xml", response);
+            return xs.DeserializeXmlToObject<GetAccountResponse>(response);
+        }
+
+        public async ValueTask<GetUserResponse> GetUser()
+        {
+            GetUserRequest request = new GetUserRequest()
+            {
+                RequesterCredentials = xs.GetRequesterCredentials()
+            };
+            string response = await xs.SendEbayRequest("GetUser",
+                xs.SerializeToXml(request));
+            //File.WriteAllText("../../../user.xml", response);
+            return xs.DeserializeXmlToObject<GetUserResponse>(response);
+        }
+
+        public async ValueTask<GetCategoryFeaturesResponse> GetCategoryFeatures()
+        {
+            GetCategoryFeaturesRequest request = new GetCategoryFeaturesRequest()
+            {
+                RequesterCredentials = xs.GetRequesterCredentials(),
+                DetailLevel = "ReturnAll",
+                AllFeaturesForCategory = true,
+                ViewAllNodes = true
+            };
+            string response = await xs.SendEbayRequest("GetCategoryFeatures",
+                xs.SerializeToXml(request));
+            //File.WriteAllText("../../../catfeature.xml", response);
+            return xs.DeserializeXmlToObject<GetCategoryFeaturesResponse>(response);
+        }
+
+        public async ValueTask<GeteBayDetailsResponse> GeteBayDetails()
+        {
+            GeteBayDetailsRequest request = new GeteBayDetailsRequest()
+            {
+                RequesterCredentials = xs.GetRequesterCredentials()
+            };
+            string response = await xs.SendEbayRequest("GeteBayDetails",
+                xs.SerializeToXml(request));
+            return xs.DeserializeXmlToObject<GeteBayDetailsResponse>(response);
+        }
+
+        public async ValueTask<GeteBayOfficialTimeResponse> GeteBayOfficialTime()
+        {
+            GeteBayOfficialTimeRequest request = new GeteBayOfficialTimeRequest()
+            {
+                RequesterCredentials = xs.GetRequesterCredentials()
+            };
+            string response = await xs.SendEbayRequest("GeteBayOfficialTime",
+                xs.SerializeToXml(request));
+
+            return xs.DeserializeXmlToObject<GeteBayOfficialTimeResponse>(response);
+        }
+
+        public async ValueTask<GetSellerTransactionsResponse> GetSellerTransactions()
         {
             GetSellerTransactionsRequest request = new GetSellerTransactionsRequest()
             {
@@ -92,7 +120,7 @@ namespace eBay.API.Facade
             };
             string response = await xs.SendEbayRequest("GetSellerTransactions",
                 xs.SerializeToXml(request));
-            return response;
+            return xs.DeserializeXmlToObject<GetSellerTransactionsResponse>(response);
         }
 
         public async ValueTask<EndFixedPriceItemResponse> EndItem(string itemId)
@@ -215,6 +243,32 @@ namespace eBay.API.Facade
             return xs.DeserializeXmlToObject<GetSellerListResponse>(response);
         }
 
+        public async ValueTask<GetMyeBaySellingResponse> GetMyeBaySelling()
+        {
+            GetMyeBaySellingRequest getMyeBaySelling = new GetMyeBaySellingRequest()
+            {
+                RequesterCredentials = xs.GetRequesterCredentials(),
+                ActiveList = new ActiveList()
+                {
+                    Sort = "TimeLeft"
+                },
+                SoldList = new SoldList()
+                {
+                },
+                ScheduledList = new ScheduledList()
+                {
+                },
+                UnsoldList = new UnsoldList(),
+                DeletedFromSoldList = new DeletedFromSoldList(),
+
+            };
+            string response = await xs.SendEbayRequest("GetMyeBaySelling",
+                xs.SerializeToXml(getMyeBaySelling));
+            File.WriteAllText("../../../Getmysellingre.xml", xs.SerializeToXml(getMyeBaySelling));
+            File.WriteAllText("../../../Getmyselling.xml", response);
+            return xs.DeserializeXmlToObject<GetMyeBaySellingResponse>(response);
+        }
+
         public async ValueTask<GetOrdersResponse> GetOrders(DateTime createTimeFrom, DateTime createTimeTo, int entriesPerPage, int pageNumber)
         {
             GetOrdersRequest getOrders = new GetOrdersRequest()
@@ -222,6 +276,7 @@ namespace eBay.API.Facade
                 RequesterCredentials = xs.GetRequesterCredentials(),
                 CreateTimeFrom = DateTimeStr.Format(createTimeFrom),
                 CreateTimeTo = DateTimeStr.Format(createTimeTo),
+                IncludeFinalValueFee = true,
                 Pagination = new Pagination()
                 {
                     EntriesPerPage = entriesPerPage,
@@ -230,9 +285,8 @@ namespace eBay.API.Facade
             };
             string response = await xs.SendEbayRequest("GetOrders",
                 xs.SerializeToXml(getOrders));
+            File.WriteAllText("../../../orders.xml", response);
             return xs.DeserializeXmlToObject<GetOrdersResponse>(response);
         }
-
     }
 }
-

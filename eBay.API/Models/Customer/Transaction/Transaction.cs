@@ -1,5 +1,6 @@
 ﻿using eBay.API.Models.Customer.Ship;
 using eBay.API.Models.Customer.Tax;
+using eBay.API.Models.Items;
 using eBay.API.Models.Product.ProductVariations;
 using System.Xml.Serialization;
 
@@ -29,6 +30,9 @@ namespace eBay.API.Models.Customer.Transaction
         public ShippingServiceSelected ShippingServiceSelected { get; set; }
 
         public DateTime ShippedTime { get; set; }
+
+        [XmlElement("FinalValueFee")]
+        public AmountType FinalValueFee { get; set; }
 
         public string TransactionSiteID { get; set; }
 

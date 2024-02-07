@@ -2,7 +2,7 @@
 
 namespace eBay.API.Models
 {
-    [XmlRoot(ElementName = "PictureData")]
+    [XmlRoot("PictureData")]
     public class PictureData
     {
         [XmlAttribute(AttributeName = "contentType")]

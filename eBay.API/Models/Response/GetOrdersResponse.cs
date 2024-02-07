@@ -4,20 +4,8 @@ using System.Xml.Serialization;
 namespace eBay.API.Models.Response
 {
     [XmlRoot("GetOrdersResponse", Namespace = "urn:ebay:apis:eBLBaseComponents")]
-    public class GetOrdersResponse
+    public class GetOrdersResponse : ResponseBase
     {
-        [XmlElement("Timestamp")]
-        public DateTime Timestamp { get; set; }
-
-        [XmlElement("Ack")]
-        public string Ack { get; set; }
-
-        [XmlElement("Version")]
-        public int Version { get; set; }
-
-        [XmlElement("Build")]
-        public string Build { get; set; }
-
         [XmlElement("PaginationResult")]
         public PaginationResult PaginationResult { get; set; }
 
